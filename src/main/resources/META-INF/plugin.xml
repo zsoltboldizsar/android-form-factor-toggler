@@ -3,8 +3,16 @@
     <name>Android Form Factor Toggler</name>
     <vendor url="https://www.zsolt.boldizsar.dev">Zsolt Boldizsár</vendor>
 
-    <description>Adds a handle to Android Studio's toolbar which toggles between phone and tablet mode of the connected
-        device (emulator or physical) by altering its screen density.
+    <description><![CDATA[
+        Adds a handle to Android Studio's toolbar which toggles between phone and tablet mode of the connected
+        device (physical or emulator). <br/>
+        <br/>
+        Usage options:
+        <ul>
+            <li>Click on the + and - icons in the toolbar (see screenshots on plugin homepage).</li>
+            <li>Search for "Enable Tablet Mode" / "Enable Phone Mode" in "Find actions". (OSX: CMD+SHIFT+A, Win/Linux: CTRL+SHIFT+A)
+        </ul>
+        ]]>
     </description>
 
     <change-notes><![CDATA[
