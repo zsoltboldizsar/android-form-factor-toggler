@@ -31,7 +31,7 @@ class TogglerAction : AnAction() {
         }
 
         if (adb.devices.size > 1) {
-            NotificationProducer.showInfo("More than one device/emulator. Detach all but one.")
+            NotificationProducer.showInfo("More than one device/emulator. Please detach all but one.")
             return
         }
 
