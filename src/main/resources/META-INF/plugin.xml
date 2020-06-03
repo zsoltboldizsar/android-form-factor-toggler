@@ -7,9 +7,9 @@
         device (emulator or physical) by altering its screen density.
     </description>
 
-    <!-- Android Studio 3.6+ -->
+    <!-- Android Studio 3.5+ -->
     <!-- see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html -->
-    <idea-version since-build="192"/>
+    <idea-version since-build="191"/>
 
     <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
          on how to target different products -->
