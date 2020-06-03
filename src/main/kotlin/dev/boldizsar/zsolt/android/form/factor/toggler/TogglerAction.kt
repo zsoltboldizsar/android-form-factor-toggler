@@ -38,20 +38,26 @@ class TogglerAction : AnAction() {
         try {
             val firstConnectedDevice = adb.devices[0]
 
-            val command: String = if (properties.getBoolean(TABLET_MODE)) "wm density reset" else "wm density 240"
-            firstConnectedDevice.executeShellCommand(command, NoOpShellOutputReceiver, 15L, TimeUnit.SECONDS)
+            firstConnectedDevice.isTablet { isTablet ->
+                if (isTablet) {
+                    NotificationProducer.showInfo("Tablets are not yet supported. Please check back later.")
+                } else {
+                    val command: String = if (properties.getBoolean(TABLET_MODE)) "wm density reset" else "wm density 240"
+                    firstConnectedDevice.executeShellCommand(command, NoOpShellOutputReceiver, 15L, TimeUnit.SECONDS)
 
-            if (properties.getBoolean(TABLET_MODE)) {
-                properties.setValue(TABLET_MODE, false)
-                event.presentation.apply {
-                    icon = enableTabletModeIcon
-                    text = "Enable Tablet Mode"
-                }
-            } else {
-                properties.setValue(TABLET_MODE, true)
-                event.presentation.apply {
-                    icon = enablePhoneModeIcon
-                    text = "Enable Phone Mode"
+                    if (properties.getBoolean(TABLET_MODE)) {
+                        properties.setValue(TABLET_MODE, false)
+                        event.presentation.apply {
+                            icon = enableTabletModeIcon
+                            text = "Enable Tablet Mode"
+                        }
+                    } else {
+                        properties.setValue(TABLET_MODE, true)
+                        event.presentation.apply {
+                            icon = enablePhoneModeIcon
+                            text = "Enable Phone Mode"
+                        }
+                    }
                 }
             }
         } catch (exception: Exception) {
