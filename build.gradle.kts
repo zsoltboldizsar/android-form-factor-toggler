@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "dev.boldizsar.zsolt"
-version = "0.0.1"
+version = "0.5.0"
 
 repositories {
     mavenCentral()
@@ -40,11 +40,4 @@ tasks {
     compileTestKotlin {
         kotlinOptions.jvmTarget = "1.8"
     }
-}
-tasks.getByName<org.jetbrains.intellij.tasks.PatchPluginXmlTask>("patchPluginXml") {
-    changeNotes(
-        """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
-    )
 }
