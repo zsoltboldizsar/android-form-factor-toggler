@@ -41,7 +41,7 @@
                 class="dev.boldizsar.zsolt.android.form.factor.toggler.TogglerAction"
                 text="Enable Tablet Mode"
                 description="Toggles between phone and tablet mode of the connected device (emulator or physical) by altering its density."
-                icon="/icons/add.svg">
+                icon="/icons/phone_active.svg">
             <add-to-group group-id="Android.SdkUpdates.NavBarToolBar" anchor="last"/>
             <add-to-group group-id="Android.MainToolBarSdkGroup" anchor="last"/>
         </action>

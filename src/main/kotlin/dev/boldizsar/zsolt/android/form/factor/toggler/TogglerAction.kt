@@ -12,8 +12,8 @@ private const val TABLET_MODE = "dev.boldizsar.zsolt.android.form.factor.toggler
 
 class TogglerAction : AnAction() {
 
-    private val enableTabletModeIcon: Icon? = IconLoader.findIcon("/icons/add.svg")
-    private val enablePhoneModeIcon: Icon? = IconLoader.findIcon("/icons/remove.svg")
+    private val enableTabletModeIcon: Icon? = IconLoader.findIcon("/icons/phone_active.svg")
+    private val enablePhoneModeIcon: Icon? = IconLoader.findIcon("/icons/tablet_active.svg")
     private val properties: PropertiesComponent = PropertiesComponent.getInstance()
 
     override fun update(event: AnActionEvent) {
