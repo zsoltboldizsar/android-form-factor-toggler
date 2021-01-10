@@ -23,7 +23,11 @@ class TogglerAction : AnAction() {
     }
 
     override fun actionPerformed(event: AnActionEvent) {
-        val adb = AndroidSdkUtils.getDebugBridge(event.project!!) ?: throw Exception("Missing ADB")
+        val adb = AndroidSdkUtils.getDebugBridge(event.project!!)
+        if (adb == null) {
+            NotificationProducer.showInfo("Couldn't load Android tools. Make sure to open an Android project and try again.")
+            return
+        }
 
         if (adb.devices.isEmpty()) {
             NotificationProducer.showInfo("No device/emulator connected.")
