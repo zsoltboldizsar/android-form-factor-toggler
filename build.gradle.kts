@@ -21,6 +21,7 @@ dependencies {
             include("*.jar")
         }
     compileOnly(androidPlugin)
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
 
     testImplementation("junit", "junit", "4.12")
 }
