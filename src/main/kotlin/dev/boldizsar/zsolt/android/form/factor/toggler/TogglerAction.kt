@@ -1,8 +1,11 @@
 package dev.boldizsar.zsolt.android.form.factor.toggler
 
 import com.intellij.ide.util.PropertiesComponent
+import com.intellij.openapi.Disposable
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
+import com.intellij.openapi.components.service
+import com.intellij.openapi.util.Disposer
 import com.intellij.openapi.util.IconLoader
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +17,7 @@ import javax.swing.Icon
 
 private const val IS_TABLET_MODE = "dev.boldizsar.zsolt.android.form.factor.toggler.is_tablet_mode"
 
-class TogglerAction : AnAction() {
+class TogglerAction : AnAction(), Disposable {
 
     private val enableTabletModeIcon: Icon? = IconLoader.findIcon("/icons/phone_active.svg")
     private val enablePhoneModeIcon: Icon? = IconLoader.findIcon("/icons/tablet_active.svg")
@@ -23,6 +26,8 @@ class TogglerAction : AnAction() {
 
     init {
         properties.setValue(IS_TABLET_MODE, false)
+
+        Disposer.register(service<DisposingService>(), this)
     }
 
     override fun update(event: AnActionEvent) {
@@ -79,6 +84,10 @@ class TogglerAction : AnAction() {
             icon = if (properties.getBoolean(IS_TABLET_MODE)) enablePhoneModeIcon else enableTabletModeIcon
             text = if (properties.getBoolean(IS_TABLET_MODE)) "Enable Phone Mode" else "Enable Tablet Mode"
         }
+    }
+
+    override fun dispose() {
+        // Clean-up resources here (listeners, heavy objects, etc.)
     }
 
 }
