@@ -32,13 +32,18 @@ intellij {
     localPath = if (project.hasProperty("studioRunPath")) studioRunPath else studioCompilePath
 }
 configure<JavaPluginConvention> {
-    sourceCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_11
 }
 tasks {
     compileKotlin {
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.jvmTarget = "11"
     }
     compileTestKotlin {
-        kotlinOptions.jvmTarget = "1.8"
+        kotlinOptions.jvmTarget = "11"
+    }
+    instrumentCode {
+        // Depending on your local IDE used ($studioCompilePath) a corresponding compiler version must be set.
+        // The releases can be found at: https://www.jetbrains.com/intellij-repository/releases
+        setCompilerVersion("203.7717.56")
     }
 }
