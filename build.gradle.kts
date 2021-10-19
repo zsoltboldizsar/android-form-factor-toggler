@@ -2,7 +2,7 @@ val studioCompilePath: String by project
 val studioRunPath: String by project
 
 plugins {
-    id("org.jetbrains.intellij") version "0.6.5"
+    id("org.jetbrains.intellij") version "1.2.0"
     java
     kotlin("jvm") version "1.4.21"
 }
@@ -28,8 +28,8 @@ dependencies {
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
-    updateSinceUntilBuild = false
-    localPath = if (project.hasProperty("studioRunPath")) studioRunPath else studioCompilePath
+    updateSinceUntilBuild.set(false)
+    localPath.set(if (project.hasProperty("studioRunPath")) studioRunPath else studioCompilePath)
 }
 configure<JavaPluginConvention> {
     sourceCompatibility = JavaVersion.VERSION_11
@@ -44,6 +44,6 @@ tasks {
     instrumentCode {
         // Depending on your local IDE used ($studioCompilePath) a corresponding compiler version must be set.
         // The releases can be found at: https://www.jetbrains.com/intellij-repository/releases
-        setCompilerVersion("203.7717.56")
+        compilerVersion.set("203.7717.56")
     }
 }
