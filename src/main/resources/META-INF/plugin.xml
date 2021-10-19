@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>dev.boldizsar.zsolt.android-form-factor-toggler</id>
     <name>Android Form Factor Toggler</name>
-    <vendor url="https://www.zsolt.boldizsar.dev">Zsolt Boldizsár</vendor>
+    <vendor url="https://zsolt.boldizsar.dev">Zsolt Boldizsár</vendor>
 
     <description><![CDATA[
         Adds a handle to Android Studio's toolbar which toggles between phone and tablet mode of the connected
@@ -16,6 +16,11 @@
     </description>
 
     <change-notes><![CDATA[
+        <b>0.6.2</b>
+        <ul>
+            <li>Upgrade to stable version of IntelliJ Platform Plugin (v1.2.0).</li>
+            <li>Show a proper error message when ADB (Android Debug Bridge) is missing (e.g. when using the plugin from within a Java project).</li>
+        </ul>
         <b>0.6.1</b>
         <ul>
             <li>Add a more descriptive icon for the action.</li>
