@@ -2,9 +2,9 @@ val studioCompilePath: String by project
 val studioRunPath: String by project
 
 plugins {
-    id("org.jetbrains.intellij") version "1.2.0"
+    id("org.jetbrains.intellij") version "1.10.0"
     java
-    kotlin("jvm") version "1.4.21"
+    kotlin("jvm") version "1.7.20"
 }
 
 group = "dev.boldizsar.zsolt"
@@ -21,7 +21,7 @@ dependencies {
             include("*.jar")
         }
     compileOnly(androidPlugin)
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.4.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 
     testImplementation("junit", "junit", "4.12")
 }
@@ -31,8 +31,9 @@ intellij {
     updateSinceUntilBuild.set(false)
     localPath.set(if (project.hasProperty("studioRunPath")) studioRunPath else studioCompilePath)
 }
-configure<JavaPluginConvention> {
+configure<JavaPluginExtension> {
     sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 tasks {
     compileKotlin {
@@ -44,6 +45,6 @@ tasks {
     instrumentCode {
         // Depending on your local IDE used ($studioCompilePath) a corresponding compiler version must be set.
         // The releases can be found at: https://www.jetbrains.com/intellij-repository/releases
-        compilerVersion.set("203.7717.56")
+        compilerVersion.set("223.7571.182")
     }
 }
