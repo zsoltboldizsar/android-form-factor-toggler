@@ -16,6 +16,11 @@
     </description>
 
     <change-notes><![CDATA[
+        <b>0.6.3</b>
+        <ul>
+            <li>Add plugin logo (courtesy of <a href="https://dribbble.com/istvan_elekes">István Elekes</a>).</li>
+            <li>Upgrade IntelliJ Platform Plugin to v1.10.0.</li>
+        </ul>
         <b>0.6.2</b>
         <ul>
             <li>Upgrade to stable version of IntelliJ Platform Plugin (v1.2.0).</li>
@@ -53,6 +58,8 @@
                 icon="/icons/phone_active.svg">
             <add-to-group group-id="Android.SdkUpdates.NavBarToolBar" anchor="last"/>
             <add-to-group group-id="Android.MainToolBarSdkGroup" anchor="last"/>
+            <add-to-group group-id="EmulatorToolbar" anchor="last" />
+            <add-to-group group-id="DeviceToolbar" anchor="last" />
         </action>
     </actions>
 </idea-plugin>
