@@ -16,6 +16,11 @@
     </description>
 
     <change-notes><![CDATA[
+        <b>0.7.0</b>
+        <ul>
+            <li>Increase minimum supported Android Studio version to Arctic Fox 2020.3.1 (previously it was 3.5).</li>
+            <li>Fix warnings reported by Plugin Verifier.</li>
+        </ul>
         <b>0.6.3</b>
         <ul>
             <li>Add plugin logo (courtesy of <a href="https://dribbble.com/istvan_elekes">István Elekes</a>).</li>
