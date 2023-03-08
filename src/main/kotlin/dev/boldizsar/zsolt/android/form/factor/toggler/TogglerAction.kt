@@ -19,8 +19,8 @@ private const val IS_TABLET_MODE = "dev.boldizsar.zsolt.android.form.factor.togg
 
 class TogglerAction : AnAction(), Disposable {
 
-    private val enableTabletModeIcon: Icon? = IconLoader.findIcon("/icons/phone_active.svg")
-    private val enablePhoneModeIcon: Icon? = IconLoader.findIcon("/icons/tablet_active.svg")
+    private val enableTabletModeIcon: Icon = IconLoader.getIcon("/icons/phone_active.svg", javaClass)
+    private val enablePhoneModeIcon: Icon = IconLoader.getIcon("/icons/tablet_active.svg", javaClass)
     private val properties: PropertiesComponent = PropertiesComponent.getInstance()
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
 
@@ -39,17 +39,17 @@ class TogglerAction : AnAction(), Disposable {
     override fun actionPerformed(event: AnActionEvent) {
         val adb = AndroidSdkUtils.getDebugBridge(event.project!!)
         if (adb == null) {
-            NotificationProducer.showInfo("Couldn't load Android tools. Make sure to open an Android project and try again.")
+            NotificationProducer.showInfo(event.project, "Couldn't load Android tools. Make sure to open an Android project and try again.")
             return
         }
 
         if (adb.devices.isEmpty()) {
-            NotificationProducer.showInfo("No device/emulator connected.")
+            NotificationProducer.showInfo(event.project, "No device/emulator connected.")
             return
         }
 
         if (adb.devices.size > 1) {
-            NotificationProducer.showInfo("More than one device/emulator. Please detach all but one.")
+            NotificationProducer.showInfo(event.project, "More than one device/emulator. Please detach all but one.")
             return
         }
 
@@ -59,7 +59,7 @@ class TogglerAction : AnAction(), Disposable {
             coroutineScope.launch {
                 val isTablet = firstConnectedDevice.awaitIsTablet()
                 if (isTablet) {
-                    NotificationProducer.showInfo("Tablets are not yet supported. Please check back later.")
+                    NotificationProducer.showInfo(event.project, "Tablets are not yet supported. Please check back later.")
                     return@launch
                 }
 
@@ -75,7 +75,7 @@ class TogglerAction : AnAction(), Disposable {
                 }
             }
         } catch (exception: Exception) {
-            NotificationProducer.showError("Operation failed. ${exception.message}")
+            NotificationProducer.showError(event.project, "Operation failed. ${exception.message}")
         }
     }
 

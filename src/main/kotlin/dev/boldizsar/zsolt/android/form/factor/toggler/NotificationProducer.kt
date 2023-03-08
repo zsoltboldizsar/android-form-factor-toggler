@@ -1,24 +1,25 @@
 package dev.boldizsar.zsolt.android.form.factor.toggler
 
-import com.intellij.notification.NotificationGroup
+import com.intellij.notification.NotificationGroupManager
 import com.intellij.notification.NotificationType
+import com.intellij.openapi.project.Project
 
-private const val DISPLAY_ID = "Android Form Factor Toggler"
-private const val TITLE = "Android Form Factor Toggler"
-private const val EMPTY_SUBTITLE = ""
+private const val NOTIFICATION_GROUP_ID = "Android Form Factor Toggler"
 
 object NotificationProducer {
 
-    fun showInfo(message: String) {
-        NotificationGroup.balloonGroup(DISPLAY_ID)
-            .createNotification(TITLE, EMPTY_SUBTITLE, message, NotificationType.INFORMATION)
-            .notify(null)
+    fun showInfo(project: Project?, message: String) {
+        NotificationGroupManager.getInstance()
+            .getNotificationGroup(NOTIFICATION_GROUP_ID)
+            .createNotification(message, NotificationType.INFORMATION)
+            .notify(project)
     }
 
-    fun showError(message: String) {
-        NotificationGroup.balloonGroup(DISPLAY_ID)
-            .createNotification(TITLE, EMPTY_SUBTITLE, message, NotificationType.ERROR)
-            .notify(null)
+    fun showError(project: Project?, message: String) {
+        NotificationGroupManager.getInstance()
+            .getNotificationGroup(NOTIFICATION_GROUP_ID)
+            .createNotification(message, NotificationType.ERROR)
+            .notify(project)
     }
 
 }
