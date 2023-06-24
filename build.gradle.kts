@@ -2,9 +2,9 @@ val studioCompilePath: String by project
 val studioRunPath: String by project
 
 plugins {
-    id("org.jetbrains.intellij") version "1.10.0"
+    id("org.jetbrains.intellij") version "1.14.1"
     java
-    kotlin("jvm") version "1.7.20"
+    kotlin("jvm") version "1.8.22"
 }
 
 group = "dev.boldizsar.zsolt"
@@ -15,13 +15,12 @@ repositories {
 }
 
 dependencies {
-    implementation(kotlin("stdlib-jdk8"))
     val androidPlugin =
         fileTree(baseDir = "$studioCompilePath/plugins/android/lib").apply {
             include("*.jar")
         }
     compileOnly(androidPlugin)
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0")
 
     testImplementation("junit", "junit", "4.12")
 }
@@ -32,15 +31,15 @@ intellij {
     localPath.set(if (project.hasProperty("studioRunPath")) studioRunPath else studioCompilePath)
 }
 configure<JavaPluginExtension> {
-    sourceCompatibility = JavaVersion.VERSION_11
-    targetCompatibility = JavaVersion.VERSION_11
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 tasks {
     compileKotlin {
-        kotlinOptions.jvmTarget = "11"
+        kotlinOptions.jvmTarget = "17"
     }
     compileTestKotlin {
-        kotlinOptions.jvmTarget = "11"
+        kotlinOptions.jvmTarget = "17"
     }
     instrumentCode {
         // Depending on your local IDE used ($studioCompilePath) a corresponding compiler version must be set.
