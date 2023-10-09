@@ -2,13 +2,13 @@ val studioCompilePath: String by project
 val studioRunPath: String by project
 
 plugins {
-    id("org.jetbrains.intellij") version "1.14.1"
+    id("org.jetbrains.intellij") version "1.10.0"
     java
     kotlin("jvm") version "1.8.22"
 }
 
 group = "dev.boldizsar.zsolt"
-version = "0.7.0"
+version = "0.8.0"
 
 repositories {
     mavenCentral()
@@ -31,15 +31,15 @@ intellij {
     localPath.set(if (project.hasProperty("studioRunPath")) studioRunPath else studioCompilePath)
 }
 configure<JavaPluginExtension> {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
 }
 tasks {
     compileKotlin {
-        kotlinOptions.jvmTarget = "17"
+        kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
     }
     compileTestKotlin {
-        kotlinOptions.jvmTarget = "17"
+        kotlinOptions.jvmTarget = JavaVersion.VERSION_11.toString()
     }
     instrumentCode {
         // Depending on your local IDE used ($studioCompilePath) a corresponding compiler version must be set.
