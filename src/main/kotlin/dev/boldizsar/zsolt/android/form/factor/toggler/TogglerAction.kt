@@ -1,5 +1,7 @@
 package dev.boldizsar.zsolt.android.form.factor.toggler
 
+import com.android.ddmlib.IDevice
+import com.android.tools.idea.streaming.emulator.EmulatorToolWindowPanel
 import com.intellij.ide.util.PropertiesComponent
 import com.intellij.openapi.Disposable
 import com.intellij.openapi.actionSystem.AnAction
@@ -25,8 +27,6 @@ class TogglerAction : AnAction(), Disposable {
     private val coroutineScope = CoroutineScope(Dispatchers.Default)
 
     init {
-        properties.setValue(IS_TABLET_MODE, false)
-
         Disposer.register(service<DisposingService>(), this)
     }
 
@@ -48,29 +48,35 @@ class TogglerAction : AnAction(), Disposable {
             return
         }
 
-        if (adb.devices.size > 1) {
-            NotificationProducer.showInfo(event.project, "More than one device/emulator. Please detach all but one.")
-            return
-        }
-
         try {
-            val firstConnectedDevice = adb.devices[0]
+            if (event.inputEvent == null) {
+                NotificationProducer.showError(event.project, "Sorry, for now, you cannot use the action as a command. Please use it via Emulator/Device toolbar action.")
+                return
+            }
+
+            val deviceInFocus = getDeviceInFocus(event)
+            val currentDevice = adb.devices.find { it.serialNumber == deviceInFocus.serialNumber }
+
+            if (currentDevice == null) {
+                NotificationProducer.showError(event.project, "Failed to identify current device.")
+                return
+            }
 
             coroutineScope.launch {
-                val isTablet = firstConnectedDevice.awaitIsTablet()
+                val isTablet = currentDevice.isTablet()
                 if (isTablet) {
                     NotificationProducer.showInfo(event.project, "Tablets are not yet supported. Please check back later.")
                     return@launch
                 }
 
                 withContext(Dispatchers.IO) {
-                    val command: String = if (properties.getBoolean(IS_TABLET_MODE)) "wm density reset" else "wm density 240"
-                    firstConnectedDevice.executeShellCommand(command, NoOpShellOutputReceiver, 15L, TimeUnit.SECONDS)
+                    val command: String = if (properties.getBoolean(IS_TABLET_MODE + currentDevice.serialNumber)) "wm density reset" else "wm density 240"
+                    currentDevice.executeShellCommand(command, NoOpShellOutputReceiver, 15L, TimeUnit.SECONDS)
 
                     withContext(Dispatchers.Default) {
-                        properties.setValue(IS_TABLET_MODE, !properties.getBoolean(IS_TABLET_MODE))
+                        properties.setValue(IS_TABLET_MODE + currentDevice.serialNumber, !properties.getBoolean(IS_TABLET_MODE + currentDevice.serialNumber))
 
-                        refreshUiState(event)
+                        refreshUiState(event, currentDevice)
                     }
                 }
             }
@@ -79,15 +85,20 @@ class TogglerAction : AnAction(), Disposable {
         }
     }
 
-    private fun refreshUiState(event: AnActionEvent) {
+    private fun refreshUiState(event: AnActionEvent, device: IDevice) {
         event.presentation.apply {
-            icon = if (properties.getBoolean(IS_TABLET_MODE)) enablePhoneModeIcon else enableTabletModeIcon
-            text = if (properties.getBoolean(IS_TABLET_MODE)) "Enable Phone Mode" else "Enable Tablet Mode"
+            icon = if (properties.getBoolean(IS_TABLET_MODE + device.serialNumber)) enablePhoneModeIcon else enableTabletModeIcon
+            text = if (properties.getBoolean(IS_TABLET_MODE + device.serialNumber)) "Enable Phone Mode" else "Enable Tablet Mode"
         }
     }
 
     override fun dispose() {
         // Clean-up resources here (listeners, heavy objects, etc.)
+    }
+
+    private fun getDeviceInFocus(event: AnActionEvent): AndroidDevice {
+        val serialNumber = (event.inputEvent.component.parent.parent.parent as EmulatorToolWindowPanel).emulator.emulatorId.serialNumber
+        return AndroidDevice(serialNumber = serialNumber)
     }
 
 }
