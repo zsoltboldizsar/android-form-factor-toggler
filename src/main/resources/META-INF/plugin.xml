@@ -4,18 +4,27 @@
     <vendor url="https://zsolt.boldizsar.dev">Zsolt Boldizsár</vendor>
 
     <description><![CDATA[
-        Adds a handle to Android Studio's toolbar which toggles between phone and tablet mode of the connected
-        device (physical or emulator). <br/>
+        Android Form Factor Toggler allows you to toggle between phone and tablet modes of the connected device (physical or emulator).<br/>
         <br/>
+        Install:
+        <ul>
+            <li>1. Install the action to your Emulator/Device toolbar by going to Tools -> Android Form Factor Toggler -> Add to Emulator/Device toolbar.
+            <li>2. Open your Emulator/Device tool window and notice the new action in the toolbar (see screenshot for more clarity).
+        </ul>
         Usage options:
         <ul>
-            <li>Click on the [[] icon in the toolbar (see screenshots on plugin homepage).</li>
-            <li>Search for "Enable Tablet Mode" / "Enable Phone Mode" in "Find actions". (OSX: CMD+SHIFT+A, Win/Linux: CTRL+SHIFT+A)
+            <li>Click on the [[] icon in either the Emulator/Device toolbar (see screenshots on plugin homepage).</li>
         </ul>
         ]]>
     </description>
 
     <change-notes><![CDATA[
+        <b>0.8.0</b>
+        <ul>
+            <li>Add an option to install the toggler action to Emulator and Device toolbars via Tools -> Android Form Factor Toggler -> Add to Emulator/Device toolbar. The toggler action therefore has been removed from the main toolbar.</li>
+            <li>Add ability to change display mode of multiple connected devices.</li>
+            <li>Increase minimum supported Android Studio version to Dolphin 2021.3.1.</li>
+        </ul>
         <b>0.7.0</b>
         <ul>
             <li>Increase minimum supported Android Studio version to Arctic Fox 2020.3.1 (previously it was 3.5).</li>
